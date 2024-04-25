@@ -17,7 +17,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 
 @Component({
   standalone: true,
-  imports: [AppMaterialModule, FormsModule, CommonModule, MenuComponent, ReactiveFormsModule],
+  imports: [AppMaterialModule, FormsModule, CommonModule, MenuComponent],
   selector: 'app-crud-revista-update',
   templateUrl: './crud-revista-update.component.html',
   styleUrls: ['./crud-revista-update.component.css'],
