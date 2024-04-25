@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { AppMaterialModule } from '../../app.material.module';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MenuComponent } from '../../menu/menu.component';
 import { Pais } from '../../models/pais.model';
@@ -12,17 +12,21 @@ import { Usuario } from '../../models/usuario.model';
 import { RevistaService } from '../../services/revisa.service';
 import Swal from 'sweetalert2';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { provideNativeDateAdapter } from '@angular/material/core';
+
 
 @Component({
   standalone: true,
-  imports: [AppMaterialModule, FormsModule, CommonModule, MenuComponent],
+  imports: [AppMaterialModule, FormsModule, CommonModule, MenuComponent, ReactiveFormsModule],
   selector: 'app-crud-revista-update',
   templateUrl: './crud-revista-update.component.html',
   styleUrls: ['./crud-revista-update.component.css'],
+  providers: [provideNativeDateAdapter()],
 })
 export class CrudRevistaUpdateComponent {
   lstPais: Pais[] = [];
   lstTipo: DataCatalogo[] = [];
+  fecha = new FormControl(new Date());
 
   objRevista: Revista = {
     nombre: '',
@@ -43,8 +47,12 @@ export class CrudRevistaUpdateComponent {
               private revistaService: RevistaService,
               @Inject(MAT_DIALOG_DATA) public data: any){
             
-            this.objRevista = data;    
-            
+
+            data.fechaCreacion = new Date( new Date(data.fechaCreacion).getTime() + (1000 * 60 * 60 * 24));
+            this.objRevista = data; 
+
+            console.log(">>>> [ini] >>> objRevista");
+            console.log(this.objRevista);
             this.utilService.listaTipoLibroRevista().subscribe(
                   x =>  this.lstTipo = x
             );
@@ -52,7 +60,9 @@ export class CrudRevistaUpdateComponent {
               x =>  this.lstPais = x
             );
         this.objUsuario.idUsuario = tokenService.getUserId();
+        
   }
+  
 
   actualizar() {
     this.objRevista.usuarioActualiza = this.objUsuario;
@@ -65,4 +75,6 @@ export class CrudRevistaUpdateComponent {
       });
     });
   }
+
+  
 }

@@ -12,12 +12,13 @@ import { Usuario } from '../../models/usuario.model';
 import { RevistaService } from '../../services/revisa.service';
 import Swal from 'sweetalert2';
 
+
 @Component({
   standalone: true,
   selector: 'app-crud-revista-add',
   imports: [AppMaterialModule, FormsModule, CommonModule, MenuComponent],
   templateUrl: './crud-revista-add.component.html',
-  styleUrls: ['./crud-revista-add.component.css']
+  styleUrls: ['./crud-revista-add.component.css'],
 })
 export class CrudRevistaAddComponent {
 
@@ -41,7 +42,7 @@ export class CrudRevistaAddComponent {
 
   constructor(private utilService: UtilService, 
               private tokenService: TokenService,
-              private revistaService: RevistaService){
+              private revistaService: RevistaService ){
           this.utilService.listaTipoLibroRevista().subscribe(
                 x =>  this.lstTipo = x
           );

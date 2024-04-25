@@ -12,6 +12,8 @@ import { Revista } from '../../models/revista.model';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CrudRevistaUpdateComponent } from '../crud-revista-update/crud-revista-update.component';
 import Swal from 'sweetalert2';
+import { Usuario } from '../../models/usuario.model';
+import { TokenService } from '../../security/token.service';
 
 @Component({
   standalone: true,
@@ -33,9 +35,13 @@ export class CrudRevistaComponent {
 
     //filtro de la consulta
     filtro: string = "";
-    
-    constructor(private dialogService: MatDialog, private revistaService: RevistaService){
 
+    objUsuario: Usuario = {} ;
+    
+    constructor(private dialogService: MatDialog, 
+                private revistaService: RevistaService,
+                private tokenService: TokenService ){
+      this.objUsuario.idUsuario = tokenService.getUserId();
     }
 
     openAddDialog(){
@@ -80,9 +86,15 @@ export class CrudRevistaComponent {
         console.log(">>> refreshTable [fin]");
     }
 
-    actualizaEstado(obj:Revista){
-      obj.estado =   obj.estado == 1 ? 0 : 1; 
+
+    actualizaEstado(obj : Revista){
+      console.log(">>> actualizaEstado [ ini ]");
+  
+      obj.estado =  obj.estado == 1 ? 0 : 1;
+      obj.usuarioActualiza =  this.objUsuario;
       this.revistaService.actualizarCrud(obj).subscribe();
+  
+      console.log(">>> actualizaEstado [ fin ]");
     }
 
     elimina(obj:Revista){

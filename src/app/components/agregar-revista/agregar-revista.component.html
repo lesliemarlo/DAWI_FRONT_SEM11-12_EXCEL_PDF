@@ -16,6 +16,7 @@
                             </mat-form-field>
                             <mat-form-field class="col-md-4">
                                 <mat-label>Fecha de Creación</mat-label>
+                                <mat-hint>DD/MM/YYYY</mat-hint>
                                 <input  matInput [(ngModel)] ="objRevista.fechaCreacion" [matDatepicker]="picker">
                                 <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                                 <mat-datepicker #picker></mat-datepicker>
