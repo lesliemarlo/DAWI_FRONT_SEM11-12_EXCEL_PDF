@@ -34,7 +34,7 @@ export class ConsultaRevistaComponent {
       varNombre: string = "";
       varFrecuencia: string = "";
       varEstado: boolean = true;
-      varFechaCreacionDesde: Date = new Date();
+      varFechaCreacionDesde: Date = new Date(1900, 0, 1);
       varFechaCreacionHasta: Date = new Date();
       varIdPais: number = -1;
       varIdTipo: number = -1;
@@ -82,12 +82,11 @@ export class ConsultaRevistaComponent {
                   }
             );
         console.log(">>> Filtrar [fin]");
-
-        
       }
-//PDF ----------------------------
-      exportarPDF() {
 
+      //Método para REPORTES
+      //PDF
+      exportarPDF() {
         this.revistaService.generateDocumentReport( 
                               this.varNombre, 
                               this.varFrecuencia, 
@@ -111,9 +110,8 @@ export class ConsultaRevistaComponent {
             }); 
       }
 
-      //EXCEL ----------------------------
+      //EXCEL
       exportarExcel() {
-
         this.revistaService.generateDocumentExcel( 
                               this.varNombre, 
                               this.varFrecuencia, 
@@ -136,5 +134,4 @@ export class ConsultaRevistaComponent {
                 a.remove();
             }); 
       }
-
 }

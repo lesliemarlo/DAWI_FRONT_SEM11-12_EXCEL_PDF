@@ -49,26 +49,28 @@ export class RevistaService {
     return this.http.get(baseUrlConsultaRevista+"/consultaRevistaPorParametros", {params});
   }
 //PDF
-  generateDocumentReport(nom:string, fre:string, desde:string, hasta:string, est:number, p:number, t:number): Observable<any> {
-    const params = new HttpParams()
-    .set("nombre", nom)
-    .set("frecuencia", fre)
-    .set("fecDesde", desde)
-    .set("fecHasta", hasta)
-    .set("estado", est)
-    .set("idPais", p)
-    .set("idTipo", t);
+generateDocumentReport(nom:string, fre:string, desde:string, hasta:string, est:number, p:number, t:number): Observable<any> {
+  const params = new HttpParams()
+  .set("nombre", nom)
+  .set("frecuencia", fre)
+  .set("fecDesde", desde)
+  .set("fecHasta", hasta)
+  .set("estado", est)
+  .set("idPais", p)
+  .set("idTipo", t);
 
-    let headers = new HttpHeaders();
-    headers.append('Accept', 'application/pdf');
-    let requestOptions: any = { headers: headers, responseType: 'blob' };
+  let headers = new HttpHeaders();
+  headers.append('Accept', 'application/pdf');
+  let requestOptions: any = { headers: headers, responseType: 'blob' };
 
-    return this.http.post(baseUrlConsultaRevista +"/reporteRevistaPdf",{params}, requestOptions).pipe(map((response)=>{
-      return {
-          filename: 'reporteDocente20232.pdf',
-          data: new Blob([response], {type: 'application/pdf'})
-      };
-  }));
+  return this.http.post(baseUrlConsultaRevista +"/reporteRevistaPDF?nombre="+nom+"&frecuencia="
+    +fre+"&fecDesde="+desde+"&fecHasta="+hasta+"&estado="+
+    est+"&idPais="+p+"&idTipo="+t,'', requestOptions).pipe(map((response)=>{
+    return {
+        filename: 'reporteRevista.pdf',
+        data: new Blob([response], {type: 'application/pdf'})
+    };
+}));
 }
 
 //EXCEL
